@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyHub - Your Global Learning Companion</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+        
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --purple: #A86DD1;
+            --blue: #5DADE2;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --glow: rgba(78, 205, 196, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(
+                124deg,
+                #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3
+            );
+            background-size: 1800% 1800%;
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+            animation: rainbowShift 18s ease infinite;
+        }
+
+        @keyframes rainbowShift {
+            0% { background-position: 0% 82%; }
+            50% { background-position: 100% 19%; }
+            100% { background-position: 0% 82%; }
+        }
+
+        /* Animated Background with sparkles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: drift 20s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        /* Floating Unicorn */
+        .unicorn {
+            position: fixed;
+            bottom: 20px;
+            left: -200px;
+            font-size: 8rem;
+            z-index: 50;
+            animation: unicornFloat 25s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+        }
+
+        @keyframes unicornFloat {
+            0% {
+                left: -200px;
+                bottom: 20px;
+                transform: rotate(0deg);
+            }
+            25% {
+                bottom: 60vh;
+                transform: rotate(5deg);
+            }
+            50% {
+                left: 50vw;
+                bottom: 30vh;
+                transform: rotate(-5deg);
+            }
+            75% {
+                bottom: 70vh;
+                transform: rotate(3deg);
+            }
+            100% {
+                left: 110vw;
+                bottom: 20px;
+                transform: rotate(0deg);
+            }
+        }
+
+        /* Rainbow sparkles */
+        .sparkle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 10px #fff,
+                0 0 20px #fff,
+                0 0 30px #ff00ff,
+                0 0 40px #00ffff;
+            animation: sparkleFloat 3s ease-in-out infinite;
+            z-index: 49;
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-100px) scale(1);
+            }
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px var(--glow);
+            letter-spacing: -1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: white;
+            border: 2px solid var(--secondary);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--secondary);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-btn:hover::before {
+            left: 0;
+        }
+
+        .nav-btn:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--glow);
+        }
+
+        .nav-btn.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px var(--shadow);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            border-color: var(--secondary);
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            display: inline-block;
+            box-shadow: 0 5px 15px var(--glow);
+        }
+
+        /* Spin the Wheel */
+        .wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .wheel-canvas-wrapper {
+            position: relative;
+        }
+
+        #wheelCanvas {
+            border-radius: 50%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #wheelCanvas:hover {
+            transform: scale(1.02);
+        }
+
+        .wheel-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        input[type="text"], textarea, input[type="number"] {
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--light);
+        }
+
+        input[type="text"]:focus, textarea:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--glow);
+            background: white;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), var(--blue));
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #FFA07A);
+            color: var(--dark);
+            box-shadow: 0 5px 15px rgba(255, 230, 109, 0.3);
+        }
+
+        .wheel-items-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .wheel-item-tag {
+            background: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid var(--secondary);
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .wheel-item-tag button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Homework Tracker */
+        .homework-form {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .homework-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .homework-item {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            display: grid;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .homework-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .homework-item.completed {
+            opacity: 0.6;
+            border-left-color: var(--secondary);
+        }
+
+        .homework-item.completed .homework-title {
+            text-decoration: line-through;
+        }
+
+        .homework-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .homework-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .homework-subject {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--accent);
+            color: var(--dark);
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .homework-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .homework-due {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .homework-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Focus Timer */
+        .timer-display {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .timer-time {
+            font-family: 'Space Mono', monospace;
+            font-size: 6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 20px var(--glow);
+            letter-spacing: 0.1em;
+        }
+
+        .timer-label {
+            font-size: 1.5rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .timer-presets {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Math Practice */
+        .practice-area {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .problem-display {
+            background: var(--light);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-family: 'Space Mono', monospace;
+            border: 3px dashed var(--secondary);
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+            font-size: 2rem;
+            padding: 1rem;
+        }
+
+        .score-display {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .score-item {
+            text-align: center;
+            padding: 1rem 2rem;
+            background: var(--light);
+            border-radius: 15px;
+            border: 2px solid var(--secondary);
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .score-label {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* English Practice */
+        .word-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 2rem;
+            border: 3px solid var(--accent);
+        }
+
+        .word-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .word-definition {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .word-example {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            font-style: italic;
+            color: var(--purple);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+            box-shadow: inset 0 2px 5px var(--shadow);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--blue));
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .timer-time {
+                font-size: 4rem;
+            }
+
+            .problem-display {
+                font-size: 2rem;
+                padding: 2rem;
+            }
+
+            .word-display {
+                font-size: 2rem;
+            }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease, slideOutRight 0.3s ease 2.7s;
+            border-left: 5px solid var(--secondary);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(400px); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideOutRight {
+            to { transform: translateX(400px); opacity: 0; }
+        }
+
+        .notification.success {
+            border-left-color: var(--secondary);
+        }
+
+        .notification.error {
+            border-left-color: var(--primary);
+        }
+
+        /* Grid Layout */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Magical Unicorn -->
+    <div class="unicorn">🦄</div>
+    
+    <!-- Rainbow Sparkles -->
+    <div class="sparkle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+    <div class="sparkle" style="left: 30%; top: 40%; animation-delay: 0.5s;"></div>
+    <div class="sparkle" style="left: 50%; top: 15%; animation-delay: 1s;"></div>
+    <div class="sparkle" style="left: 70%; top: 60%; animation-delay: 1.5s;"></div>
+    <div class="sparkle" style="left: 85%; top: 35%; animation-delay: 2s;"></div>
+    <div class="sparkle" style="left: 20%; top: 70%; animation-delay: 2.5s;"></div>
+    <div class="sparkle" style="left: 60%; top: 80%; animation-delay: 0.8s;"></div>
+    <div class="sparkle" style="left: 40%; top: 55%; animation-delay: 1.8s;"></div>
+    
+    <header>
+        <div class="header-content">
+            <div class="logo">🎓 StudyHub</div>
+            <nav>
+                <button class="nav-btn active" data-section="home">Home</button>
+                <button class="nav-btn" data-section="wheel">Spin Wheel</button>
+                <button class="nav-btn" data-section="homework">Homework</button>
+                <button class="nav-btn" data-section="timer">Focus Timer</button>
+                <button class="nav-btn" data-section="math">Math Practice</button>
+                <button class="nav-btn" data-section="english">English Practice</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="card">
+                <h1 class="card-title">Welcome to StudyHub! 🌍</h1>
+                <p style="font-size: 1.2rem; line-height: 1.8; color: #666; margin-bottom: 2rem;">
+                    Your ultimate learning companion for students around the world. Master math, improve your English, 
+                    track homework, and stay focused with our interactive tools!
+                </p>
+                <div class="grid-2">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalHomework">0</div>
+                        <div class="stat-label">Homework Items</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, var(--secondary), var(--blue));">
+                        <div class="stat-number" id="totalStudyTime">0</div>
+                        <div class="stat-label">Minutes Studied</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Spin the Wheel Section -->
+        <section id="wheel" class="section">
+            <div class="card">
+                <h2 class="card-title">Spin the Wheel Maker 🎡</h2>
+                <div class="wheel-container">
+                    <div class="wheel-canvas-wrapper">
+                        <canvas id="wheelCanvas" width="400" height="400"></canvas>
+                    </div>
+                    <div class="wheel-controls">
+                        <div class="input-group">
+                            <input type="text" id="wheelItemInput" placeholder="Enter item...">
+                            <button class="btn btn-secondary" onclick="addWheelItem()">Add Item</button>
+                        </div>
+                        <button class="btn" onclick="spinWheel()">🎲 SPIN!</button>
+                        <button class="btn btn-accent" onclick="resetWheel()">Reset Wheel</button>
+                    </div>
+                    <div class="wheel-items-list" id="wheelItemsList"></div>
+                    <div id="wheelResult" style="margin-top: 1rem; font-size: 1.5rem; font-weight: 700; color: var(--primary);"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Homework Section -->
+        <section id="homework" class="section">
+            <div class="card">
+                <h2 class="card-title">Homework Tracker 📚</h2>
+                <div class="homework-form">
+                    <input type="text" id="hwTitle" placeholder="Assignment Title">
+                    <input type="text" id="hwSubject" placeholder="Subject (e.g., Math, English)">
+                    <textarea id="hwDescription" rows="3" placeholder="Description..."></textarea>
+                    <input type="date" id="hwDueDate">
+                    <button class="btn" onclick="addHomework()">Add Assignment</button>
+                </div>
+                <div class="homework-list" id="homeworkList"></div>
+            </div>
+        </section>
+
+        <!-- Focus Timer Section -->
+        <section id="timer" class="section">
+            <div class="card">
+                <h2 class="card-title">Focus Timer ⏰</h2>
+                <div class="timer-display">
+                    <div class="timer-time" id="timerDisplay">25:00</div>
+                    <div class="timer-label" id="timerLabel">Ready to focus!</div>
+                </div>
+                <div class="timer-controls">
+                    <button class="btn" onclick="startTimer()">▶️ Start</button>
+                    <button class="btn btn-secondary" onclick="pauseTimer()">⏸️ Pause</button>
+                    <button class="btn btn-accent" onclick="resetTimer()">🔄 Reset</button>
+                </div>
+                <div class="timer-presets">
+                    <button class="btn btn-small" onclick="setTimer(25)">25 min</button>
+                    <button class="btn btn-small" onclick="setTimer(15)">15 min</button>
+                    <button class="btn btn-small" onclick="setTimer(5)">5 min</button>
+                    <button class="btn btn-small" onclick="setTimer(45)">45 min</button>
+                </div>
+                <div class="progress-bar" style="margin-top: 2rem;">
+                    <div class="progress-fill" id="timerProgress" style="width: 0%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Math Practice Section -->
+        <section id="math" class="section">
+            <div class="card">
+                <h2 class="card-title">Math Practice ➕</h2>
+                <div class="practice-area">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <label style="font-size: 1.2rem; font-weight: 600; color: var(--dark); margin-right: 1rem;">Grade Level:</label>
+                        <select id="mathGradeLevel" onchange="generateMathProblem()" style="padding: 0.8rem 1.5rem; border: 2px solid var(--secondary); border-radius: 12px; font-family: 'Fredoka', sans-serif; font-size: 1rem; background: white; cursor: pointer;">
+                            <option value="1">Grade 1 (1-10)</option>
+                            <option value="2">Grade 2 (1-20)</option>
+                            <option value="3">Grade 3 (1-50)</option>
+                            <option value="4">Grade 4 (1-100)</option>
+                            <option value="5" selected>Grade 5 (1-100, all ops)</option>
+                            <option value="6">Grade 6 (Advanced)</option>
+                            <option value="7">Grade 7-8 (Fractions)</option>
+                            <option value="9">Grade 9+ (Algebra)</option>
+                        </select>
+                    </div>
+                    <div class="problem-display" id="mathProblem">Click "New Problem" to start!</div>
+                    <input type="number" class="answer-input" id="mathAnswer" placeholder="Your answer..." step="0.01">
+                    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn" onclick="checkMathAnswer()">Check Answer</button>
+                        <button class="btn btn-secondary" onclick="generateMathProblem()">New Problem</button>
+                        <button class="btn btn-accent" onclick="resetMathScore()">Reset Score</button>
+                    </div>
+                    <div class="score-display">
+                        <div class="score-item">
+                            <div class="score-value" id="mathCorrect">0</div>
+                            <div class="score-label">Correct</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value" id="mathTotal">0</div>
+                            <div class="score-label">Total</div>
+                        </div>
+                        <div class="score-item" style="border-color: var(--accent);">
+                            <div class="score-value" id="mathAccuracy">0%</div>
+                            <div class="score-label">Accuracy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- English Practice Section -->
+        <section id="english" class="section">
+            <div class="card">
+                <h2 class="card-title">English Vocabulary 📖</h2>
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <label style="font-size: 1.2rem; font-weight: 600; color: var(--dark); margin-right: 1rem;">Grade Level:</label>
+                    <select id="vocabGradeLevel" onchange="showNewWord()" style="padding: 0.8rem 1.5rem; border: 2px solid var(--secondary); border-radius: 12px; font-family: 'Fredoka', sans-serif; font-size: 1rem; background: white; cursor: pointer;">
+                        <option value="elementary">Elementary (K-5)</option>
+                        <option value="middle" selected>Middle School (6-8)</option>
+                        <option value="high">High School (9-12)</option>
+                        <option value="advanced">Advanced/College</option>
+                    </select>
+                </div>
+                <div class="word-card">
+                    <div class="word-display" id="vocabWord">Click "New Word" to start!</div>
+                    <div class="word-definition" id="vocabDefinition"></div>
+                    <div class="word-example" id="vocabExample"></div>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn" onclick="showNewWord()">New Word</button>
+                    <button class="btn btn-secondary" onclick="toggleDefinition()">Show/Hide Definition</button>
+                    <button class="btn btn-accent" onclick="speakWord()">🔊 Pronounce</button>
+                </div>
+                <div style="margin-top: 2rem; text-align: center;">
+                    <div class="score-item" style="display: inline-block;">
+                        <div class="score-value" id="wordsLearned">0</div>
+                        <div class="score-label">Words Learned This Session</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const section = btn.dataset.section;
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.getElementById(section).classList.add('active');
+                btn.classList.add('active');
+            });
+        });
+
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Local Storage Helper
+        const storage = {
+            save: (key, data) => localStorage.setItem(key, JSON.stringify(data)),
+            load: (key) => JSON.parse(localStorage.getItem(key) || 'null'),
+            remove: (key) => localStorage.removeItem(key)
+        };
+
+        // ===== SPIN THE WHEEL =====
+        let wheelItems = storage.load('wheelItems') || ['Math', 'English', 'Science', 'History', 'Art', 'Music'];
+        let wheelSpinning = false;
+        let wheelRotation = 0;
+
+        const wheelCanvas = document.getElementById('wheelCanvas');
+        const wheelCtx = wheelCanvas.getContext('2d');
+        const wheelColors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#A86DD1', '#5DADE2', '#FFA07A', '#98D8C8', '#FF9FF3'];
+
+        function drawWheel() {
+            const centerX = wheelCanvas.width / 2;
+            const centerY = wheelCanvas.height / 2;
+            const radius = 180;
+
+            wheelCtx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+            wheelCtx.save();
+            wheelCtx.translate(centerX, centerY);
+            wheelCtx.rotate(wheelRotation);
+
+            const sliceAngle = (Math.PI * 2) / wheelItems.length;
+
+            wheelItems.forEach((item, i) => {
+                wheelCtx.beginPath();
+                wheelCtx.arc(0, 0, radius, i * sliceAngle, (i + 1) * sliceAngle);
+                wheelCtx.lineTo(0, 0);
+                wheelCtx.fillStyle = wheelColors[i % wheelColors.length];
+                wheelCtx.fill();
+                wheelCtx.strokeStyle = 'white';
+                wheelCtx.lineWidth = 3;
+                wheelCtx.stroke();
+
+                wheelCtx.save();
+                wheelCtx.rotate((i + 0.5) * sliceAngle);
+                wheelCtx.textAlign = 'center';
+                wheelCtx.fillStyle = 'white';
+                wheelCtx.font = 'bold 16px Fredoka';
+                wheelCtx.fillText(item, radius * 0.65, 5);
+                wheelCtx.restore();
+            });
+
+            // Center circle
+            wheelCtx.beginPath();
+            wheelCtx.arc(0, 0, 25, 0, Math.PI * 2);
+            wheelCtx.fillStyle = '#2C3E50';
+            wheelCtx.fill();
+
+            wheelCtx.restore();
+
+            // Pointer
+            wheelCtx.beginPath();
+            wheelCtx.moveTo(centerX + radius - 20, centerY);
+            wheelCtx.lineTo(centerX + radius + 20, centerY - 15);
+            wheelCtx.lineTo(centerX + radius + 20, centerY + 15);
+            wheelCtx.closePath();
+            wheelCtx.fillStyle = '#2C3E50';
+            wheelCtx.fill();
+            wheelCtx.strokeStyle = 'white';
+            wheelCtx.lineWidth = 2;
+            wheelCtx.stroke();
+
+            updateWheelItemsList();
+        }
+
+        function updateWheelItemsList() {
+            const list = document.getElementById('wheelItemsList');
+            list.innerHTML = wheelItems.map((item, i) => `
+                <div class="wheel-item-tag">
+                    <span>${item}</span>
+                    <button onclick="removeWheelItem(${i})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function addWheelItem() {
+            const input = document.getElementById('wheelItemInput');
+            const item = input.value.trim();
+            if (item && wheelItems.length < 12) {
+                wheelItems.push(item);
+                storage.save('wheelItems', wheelItems);
+                drawWheel();
+                input.value = '';
+                showNotification('Item added to wheel!');
+            } else if (wheelItems.length >= 12) {
+                showNotification('Maximum 12 items allowed!', 'error');
+            }
+        }
+
+        function removeWheelItem(index) {
+            wheelItems.splice(index, 1);
+            storage.save('wheelItems', wheelItems);
+            drawWheel();
+            showNotification('Item removed!');
+        }
+
+        function resetWheel() {
+            wheelItems = ['Math', 'English', 'Science', 'History', 'Art', 'Music'];
+            storage.save('wheelItems', wheelItems);
+            wheelRotation = 0;
+            drawWheel();
+            document.getElementById('wheelResult').textContent = '';
+            showNotification('Wheel reset to defaults!');
+        }
+
+        function spinWheel() {
+            if (wheelSpinning || wheelItems.length === 0) return;
+            
+            wheelSpinning = true;
+            document.getElementById('wheelResult').textContent = 'Spinning...';
+            
+            const spinTime = 3000;
+            const spinRotations = 5 + Math.random() * 5;
+            const targetRotation = wheelRotation + (Math.PI * 2 * spinRotations);
+            const startRotation = wheelRotation;
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / spinTime, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                wheelRotation = startRotation + (targetRotation - startRotation) * easeOut;
+                drawWheel();
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    wheelSpinning = false;
+                    const normalizedRotation = wheelRotation % (Math.PI * 2);
+                    const sliceAngle = (Math.PI * 2) / wheelItems.length;
+                    const selectedIndex = Math.floor((Math.PI * 2 - normalizedRotation) / sliceAngle) % wheelItems.length;
+                    const result = wheelItems[selectedIndex];
+                    document.getElementById('wheelResult').textContent = `🎉 Result: ${result}!`;
+                    showNotification(`You landed on: ${result}!`);
+                }
+            }
+            animate();
+        }
+
+        // ===== HOMEWORK TRACKER =====
+        let homeworkList = storage.load('homework') || [];
+
+        function renderHomework() {
+            const container = document.getElementById('homeworkList');
+            container.innerHTML = homeworkList.map((hw, i) => `
+                <div class="homework-item ${hw.completed ? 'completed' : ''}">
+                    <div class="homework-header">
+                        <div class="homework-title">${hw.title}</div>
+                        <span class="homework-subject">${hw.subject}</span>
+                    </div>
+                    <div class="homework-description">${hw.description}</div>
+                    <div class="homework-due">Due: ${hw.dueDate}</div>
+                    <div class="homework-actions">
+                        <button class="btn btn-small btn-secondary" onclick="toggleHomeworkComplete(${i})">
+                            ${hw.completed ? '✓ Completed' : 'Mark Complete'}
+                        </button>
+                        <button class="btn btn-small btn-accent" onclick="deleteHomework(${i})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            updateStats();
+        }
+
+        function addHomework() {
+            const title = document.getElementById('hwTitle').value.trim();
+            const subject = document.getElementById('hwSubject').value.trim();
+            const description = document.getElementById('hwDescription').value.trim();
+            const dueDate = document.getElementById('hwDueDate').value;
+
+            if (title && subject && dueDate) {
+                homeworkList.push({ title, subject, description, dueDate, completed: false });
+                storage.save('homework', homeworkList);
+                renderHomework();
+                
+                document.getElementById('hwTitle').value = '';
+                document.getElementById('hwSubject').value = '';
+                document.getElementById('hwDescription').value = '';
+                document.getElementById('hwDueDate').value = '';
+                
+                showNotification('Homework added successfully!');
+            } else {
+                showNotification('Please fill in all required fields!', 'error');
+            }
+        }
+
+        function toggleHomeworkComplete(index) {
+            homeworkList[index].completed = !homeworkList[index].completed;
+            storage.save('homework', homeworkList);
+            renderHomework();
+            showNotification(homeworkList[index].completed ? 'Great job! Assignment completed!' : 'Marked as incomplete');
+        }
+
+        function deleteHomework(index) {
+            if (confirm('Are you sure you want to delete this assignment?')) {
+                homeworkList.splice(index, 1);
+                storage.save('homework', homeworkList);
+                renderHomework();
+                showNotification('Assignment deleted!');
+            }
+        }
+
+        // ===== FOCUS TIMER =====
+        let timerSeconds = 25 * 60;
+        let timerInterval = null;
+        let timerRunning = false;
+        let totalStudyTime = storage.load('studyTime') || 0;
+        const originalTimerSeconds = 25 * 60;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            const progress = ((originalTimerSeconds - timerSeconds) / originalTimerSeconds) * 100;
+            document.getElementById('timerProgress').style.width = `${progress}%`;
+        }
+
+        function startTimer() {
+            if (!timerRunning) {
+                timerRunning = true;
+                document.getElementById('timerLabel').textContent = 'Focus time! 🎯';
+                
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        pauseTimer();
+                        document.getElementById('timerLabel').textContent = '🎉 Time\'s up! Great work!';
+                        showNotification('Focus session complete! Take a break! 🎉');
+                        
+                        totalStudyTime += Math.floor(originalTimerSeconds / 60);
+                        storage.save('studyTime', totalStudyTime);
+                        updateStats();
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            timerRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('timerLabel').textContent = 'Paused ⏸️';
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = originalTimerSeconds;
+            updateTimerDisplay();
+            document.getElementById('timerLabel').textContent = 'Ready to focus!';
+            document.getElementById('timerProgress').style.width = '0%';
+        }
+
+        function setTimer(minutes) {
+            pauseTimer();
+            timerSeconds = minutes * 60;
+            updateTimerDisplay();
+            document.getElementById('timerLabel').textContent = `Timer set to ${minutes} minutes`;
+        }
+
+        // ===== MATH PRACTICE =====
+        let currentMathProblem = null;
+        let currentMathAnswer = null;
+        let mathStats = storage.load('mathStats') || { correct: 0, total: 0 };
+        let usedProblems = []; // Track problems to avoid repeats in same session
+
+        function generateMathProblem() {
+            const grade = parseInt(document.getElementById('mathGradeLevel').value);
+            let num1, num2, operation, problemStr;
+            const maxAttempts = 50;
+            let attempts = 0;
+
+            do {
+                attempts++;
+                switch (grade) {
+                    case 1: // Grade 1: Simple addition/subtraction 1-10
+                        operation = Math.random() > 0.5 ? '+' : '-';
+                        num1 = Math.floor(Math.random() * 10) + 1;
+                        num2 = Math.floor(Math.random() * 10) + 1;
+                        if (operation === '-' && num2 > num1) [num1, num2] = [num2, num1];
+                        break;
+
+                    case 2: // Grade 2: Addition/subtraction 1-20
+                        operation = Math.random() > 0.5 ? '+' : '-';
+                        num1 = Math.floor(Math.random() * 20) + 1;
+                        num2 = Math.floor(Math.random() * 20) + 1;
+                        if (operation === '-' && num2 > num1) [num1, num2] = [num2, num1];
+                        break;
+
+                    case 3: // Grade 3: All basic ops 1-50
+                        operation = ['+', '-', '×'][Math.floor(Math.random() * 3)];
+                        if (operation === '×') {
+                            num1 = Math.floor(Math.random() * 10) + 1;
+                            num2 = Math.floor(Math.random() * 10) + 1;
+                        } else {
+                            num1 = Math.floor(Math.random() * 50) + 1;
+                            num2 = Math.floor(Math.random() * 50) + 1;
+                            if (operation === '-' && num2 > num1) [num1, num2] = [num2, num1];
+                        }
+                        break;
+
+                    case 4: // Grade 4: Larger numbers, basic division
+                        operation = ['+', '-', '×', '÷'][Math.floor(Math.random() * 4)];
+                        if (operation === '×') {
+                            num1 = Math.floor(Math.random() * 12) + 1;
+                            num2 = Math.floor(Math.random() * 12) + 1;
+                        } else if (operation === '÷') {
+                            num2 = Math.floor(Math.random() * 12) + 1;
+                            currentMathAnswer = Math.floor(Math.random() * 12) + 1;
+                            num1 = num2 * currentMathAnswer;
+                        } else {
+                            num1 = Math.floor(Math.random() * 100) + 1;
+                            num2 = Math.floor(Math.random() * 100) + 1;
+                            if (operation === '-' && num2 > num1) [num1, num2] = [num2, num1];
+                        }
+                        break;
+
+                    case 5: // Grade 5: All operations, larger numbers
+                        operation = ['+', '-', '×', '÷'][Math.floor(Math.random() * 4)];
+                        if (operation === '×') {
+                            num1 = Math.floor(Math.random() * 15) + 1;
+                            num2 = Math.floor(Math.random() * 15) + 1;
+                        } else if (operation === '÷') {
+                            num2 = Math.floor(Math.random() * 15) + 1;
+                            currentMathAnswer = Math.floor(Math.random() * 15) + 1;
+                            num1 = num2 * currentMathAnswer;
+                        } else {
+                            num1 = Math.floor(Math.random() * 150) + 1;
+                            num2 = Math.floor(Math.random() * 150) + 1;
+                            if (operation === '-' && num2 > num1) [num1, num2] = [num2, num1];
+                        }
+                        break;
+
+                    case 6: // Grade 6: Decimals, larger division
+                        operation = ['+', '-', '×', '÷'][Math.floor(Math.random() * 4)];
+                        if (Math.random() > 0.5) {
+                            num1 = (Math.floor(Math.random() * 500) + 1) / 10;
+                            num2 = (Math.floor(Math.random() * 500) + 1) / 10;
+                        } else {
+                            num1 = Math.floor(Math.random() * 200) + 1;
+                            num2 = Math.floor(Math.random() * 200) + 1;
+                        }
+                        if (operation === '-' && num2 > num1) [num1, num2] = [num2, num1];
+                        if (operation === '÷') {
+                            num2 = Math.floor(Math.random() * 20) + 1;
+                            currentMathAnswer = Math.floor(Math.random() * 20) + 1;
+                            num1 = num2 * currentMathAnswer;
+                        }
+                        break;
+
+                    case 7: // Grade 7-8: Fractions
+                        const fractionType = Math.floor(Math.random() * 2);
+                        if (fractionType === 0) {
+                            // Simple fraction addition
+                            const denom = [2, 3, 4, 5, 6, 8, 10][Math.floor(Math.random() * 7)];
+                            num1 = Math.floor(Math.random() * denom) + 1;
+                            num2 = Math.floor(Math.random() * denom) + 1;
+                            problemStr = `${num1}/${denom} + ${num2}/${denom}`;
+                            currentMathAnswer = (num1 + num2) / denom;
+                            currentMathAnswer = Math.round(currentMathAnswer * 100) / 100;
+                        } else {
+                            // Fraction of a number
+                            const denom = [2, 3, 4, 5][Math.floor(Math.random() * 4)];
+                            const numer = Math.floor(Math.random() * (denom - 1)) + 1;
+                            const whole = (Math.floor(Math.random() * 10) + 1) * denom;
+                            problemStr = `${numer}/${denom} of ${whole}`;
+                            currentMathAnswer = (numer * whole) / denom;
+                        }
+                        break;
+
+                    case 8: // Grade 9+: Algebra
+                        const algebraTypes = ['linear', 'square', 'percent'];
+                        const type = algebraTypes[Math.floor(Math.random() * algebraTypes.length)];
+                        if (type === 'linear') {
+                            const x = Math.floor(Math.random() * 20) + 1;
+                            const a = Math.floor(Math.random() * 10) + 1;
+                            const b = Math.floor(Math.random() * 20) + 1;
+                            const result = a * x + b;
+                            problemStr = `${a}x + ${b} = ${result}. Find x`;
+                            currentMathAnswer = x;
+                        } else if (type === 'square') {
+                            const x = Math.floor(Math.random() * 15) + 1;
+                            problemStr = `x² = ${x * x}. Find x`;
+                            currentMathAnswer = x;
+                        } else {
+                            const base = Math.floor(Math.random() * 100) + 50;
+                            const percent = [10, 20, 25, 30, 40, 50, 75][Math.floor(Math.random() * 7)];
+                            problemStr = `${percent}% of ${base}`;
+                            currentMathAnswer = (percent * base) / 100;
+                        }
+                        break;
+                }
+
+                if (grade <= 6 && operation !== undefined) {
+                    problemStr = `${num1} ${operation} ${num2}`;
+                    if (operation === '+') currentMathAnswer = num1 + num2;
+                    else if (operation === '-') currentMathAnswer = num1 - num2;
+                    else if (operation === '×') currentMathAnswer = num1 * num2;
+                    else if (operation === '÷' && currentMathAnswer === undefined) currentMathAnswer = num1 / num2;
+                    currentMathAnswer = Math.round(currentMathAnswer * 100) / 100;
+                }
+
+            } while (usedProblems.includes(problemStr) && attempts < maxAttempts);
+
+            if (attempts < maxAttempts) {
+                usedProblems.push(problemStr);
+                if (usedProblems.length > 20) usedProblems.shift(); // Keep last 20
+            }
+
+            currentMathProblem = problemStr + ' = ?';
+            document.getElementById('mathProblem').textContent = currentMathProblem;
+            document.getElementById('mathAnswer').value = '';
+            document.getElementById('mathAnswer').focus();
+        }
+
+        function checkMathAnswer() {
+            const userAnswer = parseFloat(document.getElementById('mathAnswer').value);
+            
+            if (isNaN(userAnswer)) {
+                showNotification('Please enter a number!', 'error');
+                return;
+            }
+
+            mathStats.total++;
+            const tolerance = 0.01;
+            const isCorrect = Math.abs(userAnswer - currentMathAnswer) < tolerance;
+            
+            if (isCorrect) {
+                mathStats.correct++;
+                showNotification('🎉 Correct! Great job!');
+                document.getElementById('mathProblem').style.borderColor = 'var(--secondary)';
+            } else {
+                showNotification(`Not quite! The answer was ${currentMathAnswer}`, 'error');
+                document.getElementById('mathProblem').style.borderColor = 'var(--primary)';
+            }
+
+            storage.save('mathStats', mathStats);
+            updateMathStats();
+            
+            setTimeout(() => {
+                document.getElementById('mathProblem').style.borderColor = 'var(--secondary)';
+                generateMathProblem();
+            }, 1500);
+        }
+
+        function updateMathStats() {
+            document.getElementById('mathCorrect').textContent = mathStats.correct;
+            document.getElementById('mathTotal').textContent = mathStats.total;
+            const accuracy = mathStats.total > 0 ? Math.round((mathStats.correct / mathStats.total) * 100) : 0;
+            document.getElementById('mathAccuracy').textContent = accuracy + '%';
+        }
+
+        function resetMathScore() {
+            if (confirm('Reset your math score?')) {
+                mathStats = { correct: 0, total: 0 };
+                usedProblems = [];
+                storage.save('mathStats', mathStats);
+                updateMathStats();
+                showNotification('Score reset!');
+            }
+        }
+
+        // ===== ENGLISH VOCABULARY =====
+        const vocabularyDatabase = {
+            elementary: [
+                { word: 'Brave', definition: 'Ready to face danger or pain; showing courage', example: 'The brave firefighter rescued the cat from the tree.' },
+                { word: 'Curious', definition: 'Eager to know or learn something', example: 'The curious child asked many questions about space.' },
+                { word: 'Generous', definition: 'Showing kindness by giving freely', example: 'She was generous and shared her lunch with her friend.' },
+                { word: 'Patient', definition: 'Able to wait calmly without getting upset', example: 'The patient teacher explained the problem again.' },
+                { word: 'Cheerful', definition: 'Noticeably happy and optimistic', example: 'Her cheerful smile brightened everyone\'s day.' },
+                { word: 'Ancient', definition: 'Very old; belonging to the distant past', example: 'They discovered ancient ruins in the desert.' },
+                { word: 'Enormous', definition: 'Very large in size or amount', example: 'The enormous elephant was the biggest at the zoo.' },
+                { word: 'Fragile', definition: 'Easily broken or damaged', example: 'Please handle the fragile glass carefully.' },
+                { word: 'Gleaming', definition: 'Shining brightly, especially reflected light', example: 'The gleaming trophy sat on the shelf.' },
+                { word: 'Magnificent', definition: 'Extremely beautiful, impressive, or grand', example: 'We saw a magnificent sunset over the ocean.' },
+                { word: 'Peculiar', definition: 'Strange or unusual', example: 'The peculiar noise came from the attic.' },
+                { word: 'Timid', definition: 'Showing a lack of courage or confidence; shy', example: 'The timid rabbit hid behind the bush.' },
+                { word: 'Cozy', definition: 'Giving a feeling of comfort and warmth', example: 'The cabin was cozy with a warm fireplace.' },
+                { word: 'Delicious', definition: 'Highly pleasant to taste', example: 'The cookies were absolutely delicious!' },
+                { word: 'Honest', definition: 'Free of deceit; truthful', example: 'He was honest about breaking the window.' },
+                { word: 'Humble', definition: 'Having a modest opinion of one\'s importance', example: 'Despite her success, she remained humble.' },
+                { word: 'Jolly', definition: 'Happy and cheerful', example: 'Santa Claus is known for being jolly.' },
+                { word: 'Loyal', definition: 'Giving or showing firm support to someone', example: 'The loyal dog waited for its owner every day.' },
+                { word: 'Polite', definition: 'Having good manners; respectful', example: 'She was polite and said thank you.' },
+                { word: 'Swift', definition: 'Happening quickly or moving fast', example: 'The swift rabbit escaped the fox.' }
+            ],
+            middle: [
+                { word: 'Abundant', definition: 'Existing in large quantities; plentiful', example: 'The forest had abundant wildlife and plants.' },
+                { word: 'Absurd', definition: 'Wildly unreasonable or illogical', example: 'The idea of flying pigs is absurd.' },
+                { word: 'Advocate', definition: 'A person who publicly supports a particular cause', example: 'She is an advocate for environmental protection.' },
+                { word: 'Aspire', definition: 'To have a strong desire to achieve something', example: 'Many students aspire to attend college.' },
+                { word: 'Benevolent', definition: 'Well-meaning and kindly', example: 'The benevolent donor gave money to the school.' },
+                { word: 'Cautious', definition: 'Careful to avoid potential problems or dangers', example: 'He was cautious when crossing the busy street.' },
+                { word: 'Compassionate', definition: 'Feeling or showing sympathy and concern for others', example: 'The compassionate nurse cared for her patients.' },
+                { word: 'Contemplate', definition: 'To think deeply about something', example: 'She sat by the lake to contemplate her future.' },
+                { word: 'Deliberate', definition: 'Done consciously and intentionally', example: 'His actions were deliberate, not accidental.' },
+                { word: 'Diligent', definition: 'Having or showing care in one\'s work or duties', example: 'The diligent student studied every night.' },
+                { word: 'Eloquent', definition: 'Fluent or persuasive in speaking or writing', example: 'Her eloquent speech moved the audience to tears.' },
+                { word: 'Empathy', definition: 'The ability to understand and share others\' feelings', example: 'He showed empathy for those suffering from the disaster.' },
+                { word: 'Formidable', definition: 'Inspiring fear or respect through being powerful', example: 'The team faced a formidable opponent.' },
+                { word: 'Gracious', definition: 'Courteous, kind, and pleasant', example: 'The gracious host welcomed everyone warmly.' },
+                { word: 'Immense', definition: 'Extremely large or great', example: 'The immense mountain towered over the valley.' },
+                { word: 'Innovative', definition: 'Featuring new methods; original and creative', example: 'The company developed innovative technology.' },
+                { word: 'Integrity', definition: 'The quality of being honest and having strong morals', example: 'She is known for her integrity and fairness.' },
+                { word: 'Melancholy', definition: 'A feeling of deep sadness', example: 'The melancholy music reminded him of lost friends.' },
+                { word: 'Meticulous', definition: 'Showing great attention to detail', example: 'The artist was meticulous in every brushstroke.' },
+                { word: 'Nostalgia', definition: 'A sentimental longing for the past', example: 'Looking at old photos filled her with nostalgia.' },
+                { word: 'Profound', definition: 'Very great or intense; having deep meaning', example: 'The book had a profound impact on society.' },
+                { word: 'Resilient', definition: 'Able to recover quickly from difficulties', example: 'The resilient community rebuilt after the hurricane.' },
+                { word: 'Skeptical', definition: 'Not easily convinced; having doubts', example: 'He was skeptical about the magic trick.' },
+                { word: 'Tenacious', definition: 'Not easily giving up; persistent', example: 'Her tenacious spirit helped her succeed.' },
+                { word: 'Tranquil', definition: 'Free from disturbance; calm and peaceful', example: 'The lake was tranquil in the early morning.' },
+                { word: 'Versatile', definition: 'Able to adapt to many different functions', example: 'She is a versatile athlete who plays many sports.' },
+                { word: 'Vigorous', definition: 'Strong, healthy, and full of energy', example: 'The vigorous exercise left them breathless.' },
+                { word: 'Wary', definition: 'Feeling or showing caution', example: 'The deer was wary of approaching humans.' },
+                { word: 'Zealous', definition: 'Having great energy or enthusiasm', example: 'She was zealous in her pursuit of justice.' }
+            ],
+            high: [
+                { word: 'Ambiguous', definition: 'Open to more than one interpretation; unclear', example: 'The politician\'s ambiguous statement confused voters.' },
+                { word: 'Arbitrary', definition: 'Based on random choice rather than reason', example: 'The arbitrary rules seemed unfair to students.' },
+                { word: 'Astute', definition: 'Having good judgment; shrewd', example: 'The astute investor made wise financial decisions.' },
+                { word: 'Candid', definition: 'Truthful and straightforward; frank', example: 'She gave a candid assessment of the situation.' },
+                { word: 'Coherent', definition: 'Logical and consistent; making sense', example: 'His argument was coherent and well-structured.' },
+                { word: 'Convoluted', definition: 'Extremely complex and difficult to follow', example: 'The convoluted plot confused many viewers.' },
+                { word: 'Corroborate', definition: 'To confirm or give support to a statement', example: 'The witness testimony corroborated her alibi.' },
+                { word: 'Culminate', definition: 'To reach a climax or final point', example: 'Years of research culminated in a breakthrough.' },
+                { word: 'Cynical', definition: 'Distrustful of human sincerity or integrity', example: 'His cynical view made him doubt everyone\'s motives.' },
+                { word: 'Derivative', definition: 'Imitative of the work of another; not original', example: 'Critics said the film was derivative of earlier works.' },
+                { word: 'Discern', definition: 'To perceive or recognize something', example: 'She could discern the subtle differences between the paintings.' },
+                { word: 'Eccentric', definition: 'Unconventional and unusual in behavior', example: 'The eccentric inventor had many strange habits.' },
+                { word: 'Eloquence', definition: 'Fluent and persuasive speech or writing', example: 'His eloquence captivated the audience.' },
+                { word: 'Empirical', definition: 'Based on observation or experience rather than theory', example: 'The study provided empirical evidence for the hypothesis.' },
+                { word: 'Enigmatic', definition: 'Difficult to interpret or understand; mysterious', example: 'The Mona Lisa\'s smile is famously enigmatic.' },
+                { word: 'Ephemeral', definition: 'Lasting for a very short time', example: 'The ephemeral beauty of cherry blossoms attracts many visitors.' },
+                { word: 'Esoteric', definition: 'Intended for or understood by only a small group', example: 'The professor\'s esoteric lecture was hard to follow.' },
+                { word: 'Exemplary', definition: 'Serving as a desirable model; very good', example: 'Her exemplary behavior earned her an award.' },
+                { word: 'Facilitate', definition: 'To make an action or process easier', example: 'Technology can facilitate communication across distances.' },
+                { word: 'Fallacious', definition: 'Based on a mistaken belief or faulty reasoning', example: 'His fallacious argument was quickly dismantled.' },
+                { word: 'Formulate', definition: 'To create or devise a plan or idea methodically', example: 'Scientists formulated a new theory about gravity.' },
+                { word: 'Gratuitous', definition: 'Uncalled for; lacking good reason', example: 'The film contained gratuitous violence.' },
+                { word: 'Hypothetical', definition: 'Based on a suggested idea rather than fact', example: 'Let\'s consider a hypothetical scenario.' },
+                { word: 'Impediment', definition: 'A hindrance or obstruction', example: 'Lack of funding was an impediment to progress.' },
+                { word: 'Inadvertent', definition: 'Not resulting from or achieved through deliberate planning', example: 'The inadvertent error caused confusion.' },
+                { word: 'Inexorable', definition: 'Impossible to stop or prevent', example: 'The inexorable march of time affects us all.' },
+                { word: 'Juxtapose', definition: 'To place side by side for contrasting effect', example: 'The artist juxtaposed light and dark colors.' },
+                { word: 'Mitigate', definition: 'To make less severe or serious', example: 'Measures were taken to mitigate the environmental damage.' },
+                { word: 'Nefarious', definition: 'Wicked or criminal', example: 'The villain hatched a nefarious plot.' },
+                { word: 'Paradox', definition: 'A seemingly contradictory statement that may be true', example: 'The liar\'s paradox is a famous logical puzzle.' },
+                { word: 'Pervasive', definition: 'Spreading widely throughout an area', example: 'Social media has become pervasive in modern life.' },
+                { word: 'Pragmatic', definition: 'Dealing with things practically and realistically', example: 'She took a pragmatic approach to solving the problem.' },
+                { word: 'Scrutinize', definition: 'To examine closely and thoroughly', example: 'The committee will scrutinize all applications.' },
+                { word: 'Ubiquitous', definition: 'Present, appearing, or found everywhere', example: 'Smartphones have become ubiquitous in society.' },
+                { word: 'Vindicate', definition: 'To clear of blame or suspicion', example: 'New evidence vindicated the accused person.' }
+            ],
+            advanced: [
+                { word: 'Aberration', definition: 'A departure from what is normal or expected', example: 'The warm winter was considered a climate aberration.' },
+                { word: 'Ameliorate', definition: 'To make something better or more tolerable', example: 'Policies were enacted to ameliorate poverty.' },
+                { word: 'Anachronism', definition: 'Something belonging to a period other than its own', example: 'A sundial in a modern city is an anachronism.' },
+                { word: 'Antithesis', definition: 'The direct opposite of something', example: 'His behavior was the antithesis of professional.' },
+                { word: 'Arduous', definition: 'Involving or requiring strenuous effort; difficult', example: 'The arduous climb to the summit took all day.' },
+                { word: 'Belie', definition: 'To fail to give a true impression of something', example: 'His calm demeanor belied his inner anxiety.' },
+                { word: 'Cacophony', definition: 'A harsh, discordant mixture of sounds', example: 'The traffic created a cacophony of noise.' },
+                { word: 'Clandestine', definition: 'Kept secret or done secretively', example: 'They held clandestine meetings to plan the surprise.' },
+                { word: 'Dichotomy', definition: 'A division into two contrasting groups', example: 'There is a dichotomy between theory and practice.' },
+                { word: 'Ebullient', definition: 'Cheerful and full of energy', example: 'Her ebullient personality lifted everyone\'s spirits.' },
+                { word: 'Elucidate', definition: 'To make something clear; to explain', example: 'The professor elucidated the complex theorem.' },
+                { word: 'Enervate', definition: 'To cause someone to feel drained of energy', example: 'The heat enervated the exhausted hikers.' },
+                { word: 'Extrapolate', definition: 'To extend findings to predict future outcomes', example: 'Scientists extrapolated the data to forecast trends.' },
+                { word: 'Fortuitous', definition: 'Happening by a lucky chance', example: 'Their fortuitous meeting led to a lifelong friendship.' },
+                { word: 'Hegemony', definition: 'Leadership or dominance, especially by one state', example: 'The empire established hegemony over the region.' },
+                { word: 'Iconoclast', definition: 'A person who attacks cherished beliefs or institutions', example: 'As an iconoclast, she challenged traditional thinking.' },
+                { word: 'Idiosyncrasy', definition: 'A mode of behavior peculiar to an individual', example: 'His idiosyncrasy was always wearing mismatched socks.' },
+                { word: 'Impetuous', definition: 'Acting quickly without thought or care', example: 'His impetuous decision led to unforeseen consequences.' },
+                { word: 'Intransigent', definition: 'Unwilling to change one\'s views or agree', example: 'The intransigent negotiator refused all compromises.' },
+                { word: 'Irascible', definition: 'Having a tendency to get angry easily', example: 'The irascible professor was known for his temper.' },
+                { word: 'Loquacious', definition: 'Tending to talk a great deal', example: 'The loquacious guest dominated the conversation.' },
+                { word: 'Magnanimous', definition: 'Generous and forgiving, especially toward a rival', example: 'The magnanimous winner praised her opponent.' },
+                { word: 'Obfuscate', definition: 'To deliberately make something unclear', example: 'The report seemed designed to obfuscate the truth.' },
+                { word: 'Panacea', definition: 'A solution for all difficulties or diseases', example: 'There is no panacea for the world\'s problems.' },
+                { word: 'Parsimonious', definition: 'Unwilling to spend money; frugal', example: 'His parsimonious nature made him save every penny.' },
+                { word: 'Pedantic', definition: 'Excessively concerned with minor details', example: 'The pedantic editor corrected every tiny error.' },
+                { word: 'Perfunctory', definition: 'Carried out with minimal effort or thought', example: 'He gave a perfunctory glance at the document.' },
+                { word: 'Pernicious', definition: 'Having a harmful effect in a gradual way', example: 'The pernicious influence of misinformation spread.' },
+                { word: 'Recalcitrant', definition: 'Having an obstinately uncooperative attitude', example: 'The recalcitrant student refused to follow rules.' },
+                { word: 'Sagacious', definition: 'Having good judgment; wise', example: 'The sagacious leader made sound decisions.' },
+                { word: 'Salient', definition: 'Most noticeable or important', example: 'The salient feature of the design was its simplicity.' },
+                { word: 'Sycophant', definition: 'A person who acts obsequiously to gain advantage', example: 'The sycophant constantly flattered the boss.' },
+                { word: 'Temerity', definition: 'Excessive confidence or boldness; audacity', example: 'He had the temerity to question the expert.' },
+                { word: 'Vacillate', definition: 'To waver between different opinions', example: 'She vacillated between accepting and declining the offer.' },
+                { word: 'Vehement', definition: 'Showing strong feeling; forceful and passionate', example: 'His vehement objection stopped the proceedings.' }
+            ]
+        };
+
+        let currentWord = null;
+        let definitionVisible = false;
+        let usedWords = { elementary: [], middle: [], high: [], advanced: [] };
+        let wordsLearnedCount = 0;
+
+        function showNewWord() {
+            const level = document.getElementById('vocabGradeLevel').value;
+            const availableWords = vocabularyDatabase[level];
+            
+            // Filter out used words
+            const unusedWords = availableWords.filter(word => 
+                !usedWords[level].includes(word.word)
+            );
+            
+            // If all words have been used, reset the used words for this level
+            if (unusedWords.length === 0) {
+                usedWords[level] = [];
+                showNotification('🎉 You\'ve learned all words in this level! Starting over.');
+            }
+            
+            // Select word from unused or reset pool
+            const wordPool = unusedWords.length > 0 ? unusedWords : availableWords;
+            currentWord = wordPool[Math.floor(Math.random() * wordPool.length)];
+            
+            // Mark as used
+            usedWords[level].push(currentWord.word);
+            wordsLearnedCount++;
+            
+            document.getElementById('vocabWord').textContent = currentWord.word;
+            document.getElementById('vocabDefinition').textContent = currentWord.definition;
+            document.getElementById('vocabExample').textContent = `"${currentWord.example}"`;
+            document.getElementById('wordsLearned').textContent = wordsLearnedCount;
+            definitionVisible = true;
+            
+            document.getElementById('vocabDefinition').style.display = 'block';
+            document.getElementById('vocabExample').style.display = 'block';
+        }
+
+        function toggleDefinition() {
+            definitionVisible = !definitionVisible;
+            document.getElementById('vocabDefinition').style.display = definitionVisible ? 'block' : 'none';
+            document.getElementById('vocabExample').style.display = definitionVisible ? 'block' : 'none';
+        }
+
+        function speakWord() {
+            if (currentWord && 'speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(currentWord.word);
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            } else {
+                showNotification('Speech synthesis not supported in your browser', 'error');
+            }
+        }
+
+        // ===== UPDATE STATS =====
+        function updateStats() {
+            document.getElementById('totalHomework').textContent = homeworkList.length;
+            document.getElementById('totalStudyTime').textContent = totalStudyTime;
+        }
+
+        // ===== INITIALIZE =====
+        drawWheel();
+        renderHomework();
+        updateTimerDisplay();
+        updateMathStats();
+        updateStats();
+
+        // Enter key handlers
+        document.getElementById('wheelItemInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addWheelItem();
+        });
+
+        document.getElementById('mathAnswer').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkMathAnswer();
+        });
+    </script>
+</body>
+</html>
+
